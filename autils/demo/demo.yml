@@ -1,0 +1,12 @@
+name: demo
+description: Use this library as a demo to bootstrap your own library
+categories:
+  - OS
+maintainers:
+  - name: Beraldo Leal
+    email: bleal@redhat.com
+supported_platforms:
+  - CentOS Stream 8
+  - CentOS Stream 9
+  - Fedora36
+remote: True
