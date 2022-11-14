@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "title": "Avocado Autils.yaml",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "The short name of your library. Make sure this is following PEP8 since it will be the package name.",
+            "type": "string"
+        },
+        "description": {
+            "description": "A short description of your library that will be public for our users.",
+            "type": "string"
+        },
+        "categories": {
+            "description": "One or more categories your library will be listed.",
+            "type": "array",
+            "prefixItems": [
+                { "enum": ["Files", "CPU", "Hardware", "OS", "Development", "Misc"]}
+            ],
+            "items": { "type": "string" }
+        },
+        "maintainers": {
+            "description": "List of maintainers of this library.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["name"],
+                "properties": {
+                    "name": {
+                        "description": "The maintainers name",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The maintainers email",
+                        "type": "string",
+                        "format": "email"
+                    }
+                }
+            }
+        },
+        "supported_platforms": {
+            "description": "List of the supported platforms of this library.",
+            "type": "array",
+            "prefixItems": [
+                { "enum": ["CentOS Stream 8", "CentOS Stream 9", "Fedora36", "Fedora37"] }
+            ],
+            "items": { "type": "string" }
+        },
+        "remote": {
+            "description": "If you library has support for remote execution or not.",
+            "type": "boolean" 
+        }
+    },
+    "required": ["name", "description", "categories", "maintainers", "supported_platforms", "remote"]
+}
