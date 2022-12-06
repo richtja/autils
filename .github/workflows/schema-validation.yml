@@ -14,5 +14,4 @@ jobs:
       - name: Validating all libraries against our schema
         run: |
           pip3 install --upgrade pip
-          pip3 install -r requirements-dev.txt
           python3 tests/validate-schema.py
