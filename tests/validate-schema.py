@@ -28,20 +28,22 @@ from jsonschema import exceptions, validate
 def validate_yaml(filename, schema):
     """Validate a yaml file against a specific schema."""
     print(f"Validating {filename}...")
-    with open(filename, 'rb') as fp_data, open(schema, 'rb') as fp_schema:
+    with open(filename, "rb") as fp_data, open(schema, "rb") as fp_schema:
         data = fp_data.read()
         schema = fp_schema.read()
 
-    validate(yaml.load(data, Loader=yaml.SafeLoader),
-             yaml.load(schema, Loader=yaml.SafeLoader))
+    validate(
+        yaml.load(data, Loader=yaml.SafeLoader),
+        yaml.load(schema, Loader=yaml.SafeLoader),
+    )
 
 
 def validate_yamls():
     print("Starting validation...")
     failed = False
-    for file in glob.glob('./autils/*/*.yml'):
+    for file in glob.glob("./autils/*/*.yml"):
         try:
-            validate_yaml(file, './schemas/autils.schema')
+            validate_yaml(file, "./schemas/autils.schema")
         except exceptions.ValidationError as err:
             print(file, err.message)
             failed = True
