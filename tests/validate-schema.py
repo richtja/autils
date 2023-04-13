@@ -28,7 +28,7 @@ from jsonschema import exceptions, validate
 def validate_yaml(filename, schema):
     """Validate a yaml file against a specific schema."""
     print(f"Validating {filename}...")
-    with open(filename, 'r') as fp_data, open(schema, 'r') as fp_schema:
+    with open(filename, 'rb') as fp_data, open(schema, 'rb') as fp_schema:
         data = fp_data.read()
         schema = fp_schema.read()
 
