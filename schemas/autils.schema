@@ -44,7 +44,7 @@
             "description": "List of the supported platforms of this library.",
             "type": "array",
             "prefixItems": [
-                { "enum": ["CentOS Stream 8", "CentOS Stream 9", "Fedora36", "Fedora37"] }
+                { "enum": ["CentOS Stream 8", "CentOS Stream 9", "Fedora 36", "Fedora 37"] }
             ],
             "items": { "type": "string" }
         },
