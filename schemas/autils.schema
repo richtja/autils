@@ -48,10 +48,15 @@
             ],
             "items": { "type": "string" }
         },
+        "tests": {
+            "description": "List of tests specific to this library.",
+            "type": "array",
+            "items": { "type": "string" }
+        },
         "remote": {
             "description": "If you library has support for remote execution or not.",
             "type": "boolean" 
         }
     },
-    "required": ["name", "description", "categories", "maintainers", "supported_platforms", "remote"]
+    "required": ["name", "description", "categories", "maintainers", "supported_platforms", "remote", tests]
 }
