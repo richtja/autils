@@ -41,7 +41,7 @@ def validate_yaml(filename, schema):
 def validate_yamls():
     print("Starting validation...")
     failed = False
-    for file in glob.glob("./autils/*/*.yml"):
+    for file in glob.glob("./metadata/autils/*/*.yml"):
         try:
             validate_yaml(file, "./schemas/autils.schema")
         except exceptions.ValidationError as err:
