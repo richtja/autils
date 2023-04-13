@@ -32,8 +32,8 @@ def validate_yaml(filename, schema):
         data = fp_data.read()
         schema = fp_schema.read()
 
-        validate(yaml.load(data, Loader=yaml.SafeLoader),
-                 yaml.load(schema, Loader=yaml.SafeLoader))
+    validate(yaml.load(data, Loader=yaml.SafeLoader),
+             yaml.load(schema, Loader=yaml.SafeLoader))
 
 
 def validate_yamls():
