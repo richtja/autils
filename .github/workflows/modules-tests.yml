@@ -1,0 +1,18 @@
+name: Runs the tests for library modules
+run-name: Executed by ${{ github.actor }}
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  modules-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Install Avocado to run tests
+        run: pip3 install git+https://github.com/avocado-framework/avocado@7998c0a6d1bdd8ce60235cd4d2aa04afbebfe00e#egg=avocado_framework
+
+      - name: Run the ar module test
+        run: ./tests/test-module.py metadata/autils/archive/ar.yml
