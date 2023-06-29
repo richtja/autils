@@ -36,7 +36,11 @@
                         "description": "The maintainers email",
                         "type": "string",
                         "format": "email"
-                    }
+                    },
+                    "github_usr_name": {
+                        "description": "The maintainers GitHub username",
+                        "type": "string"
+                    },
                 }
             }
         },
