@@ -22,10 +22,6 @@ for platform in metadata["supported_platforms"]:
     image = CONTAINER_IMAGE_MAPPING.get(platform)
     config = {"run.spawner": "podman", "spawner.podman.image": image}
 
-    # REMOVE when Avocado 102.0 is released
-    config[
-        "spawner.podman.avocado_spawner_egg"
-    ] = "https://cleber.fedorapeople.org/avocado_framework-101.0-py3.11.egg"
     config["resolver.references"] = metadata["tests"]
     test_suites.append(TestSuite.from_config(config, name))
 
