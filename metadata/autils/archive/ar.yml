@@ -6,6 +6,7 @@ categories:
 maintainers:
   - name: Cleber Rosa
     email: crosa@redhat.com
+    github_usr_name: clebergnu
 supported_platforms:
   - CentOS Stream 9
   - Fedora 36

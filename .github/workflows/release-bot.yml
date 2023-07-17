@@ -1,0 +1,100 @@
+name: release bot
+on:
+  schedule:
+    - cron: 0 5 * * 1
+  workflow_dispatch: null
+jobs:
+  release-vote:
+    name: release vote
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: check if relese is needed
+        run: |
+          echo 'COMMITS_NUMBER='$(git rev-list $(echo $(git tag --sort=-taggerdate |
+          head -n 1))..HEAD --count) >> $GITHUB_ENV
+          if [ $(git rev-list $(echo $(git tag --sort=-taggerdate | head -n 1))..HEAD --count) -lt ${{ vars.RELEASE_THRESHOLD }} ]; then
+            echo 'TIME_FOR_VOTE=0' >> $GITHUB_ENV
+          else
+            echo 'TIME_FOR_VOTE=1' >> $GITHUB_ENV
+          fi
+      - name: Generate token
+        id: generate_token
+        if: ${{ env.TIME_FOR_VOTE == 1 }}
+        uses: tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c
+        with:
+          app_id: ${{ secrets.MR_AVOCADO_ID }}
+          installation_id: ${{ secrets.MR_AVOCADO_INSTALLATION_ID }}
+          private_key: ${{ secrets.MR_AVOCADO_PRIVATE_KEY }}
+      - name: Get Discussion ID and maintainers
+        if: ${{ env.TIME_FOR_VOTE == 1 }}
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+        run: |
+          discussion_data=$(gh api graphql -f query='{
+                      search(first: 100, query: "repo:richtja/autils is:open category:Release-decision", type: DISCUSSION) {
+                        nodes {
+                          ... on Discussion {
+                            id createdAt
+                          }
+                        }
+                      }
+              }' )
+
+          echo 'DISCUSSION_ID='$(echo $discussion_data | jq .data.search.nodes[0].id) >> $GITHUB_ENV
+
+          echo 'NEW_COMMITS='$(git log --since="$(echo $discussion_data | jq .data.search.nodes[0].createdAt)" --format=format:%H) >> $GITHUB_ENV
+
+          usr_names=()
+
+          for utils_meta in ./metadata/autils/*/; do
+                  for metadata_file in $utils_meta*.yml; do
+                          usr_names+=("@$(sed -n '/github_usr_name:[[:space:]]*\([^[:space:]]\+\)/{s/github_usr_name:[[:space:]]*//;s/[[:space:]]//g;p;q;}' $metadata_file)")
+                  done
+          done
+
+          echo 'USR_NAMES='$(echo "${usr_names[@]}" | tr ' ' '\n' | sort -u) >> $GITHUB_ENV
+      - name: Create release discussion
+        if: ${{ env.TIME_FOR_VOTE == 1 }}
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+        run: |
+          if [[ "${{ env.DISCUSSION_ID }}" = "null" ]]; then
+            gh api graphql -f query='mutation {
+              createDiscussion(input: {
+                repositoryId: ${{ vars.REPOSITORY_ID }},
+                categoryId: ${{ vars.CATEGORY_ID }},
+                body: "Hello all,
+                      Autils reached threshold of ${{ vars.RELEASE_THRESHOLD }} commits from the latest release and now we have ${{ env.COMMITS_NUMBER }} commits from the latest release. Therefore, it is time to vote if new release is needed. Please use :+1:  or :-1: for this discussion to vote.
+                      Thank you.\n\nThis vote is meat only for maintainers: ${{ env.USR_NAMES }}",
+                title: "Release decision"}) {
+
+                discussion {
+                  id
+                }
+              }
+            }
+            '
+          fi
+      - name: Add comment to discussion
+        if: ${{ env.TIME_FOR_VOTE == 1 }}
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+        run: |
+          if [[ "${{ env.DISCUSSION_ID }}" != "null" ]]; then
+              gh api graphql -f query='mutation {
+                addDiscussionComment(input: {
+                  discussionId: ${{ env.DISCUSSION_ID }},
+                  body: "This is a kindly reminder of ongoing release voting. Please use :+1:  or :-1:  for this discussion to vote.
+                      Thank you.\n\nNew commits from the beginning of the voting: ${{ env.NEW_COMMITS }}\nThis vote is meat only for maintainers: ${{ env.USR_NAMES }}"}) {
+
+                  comment {
+                    id
+                  }
+                }
+              }
+              '
+          fi
