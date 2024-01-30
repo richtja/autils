@@ -16,3 +16,17 @@ jobs:
 
       - name: Run the ar module test
         run: ./tests/test-module.py metadata/autils/archive/ar.yml
+
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install requirements for the static checks
+        run: pip3 install -r static-checks/requirements.txt
+
+      - name: Runs all the static checks
+        run: ./static-checks/run-static-checks
