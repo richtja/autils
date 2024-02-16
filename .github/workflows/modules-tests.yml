@@ -22,11 +22,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+
+      - name: run static checks
+        uses: avocado-framework/avocado-ci-tools@main
         with:
-          submodules: true
-
-      - name: Install requirements for the static checks
-        run: pip3 install -r static-checks/requirements.txt
-
-      - name: Runs all the static checks
-        run: ./static-checks/run-static-checks
+          avocado-static-checks: true
