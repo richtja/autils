@@ -19,3 +19,6 @@ jobs:
         uses: avocado-framework/avocado-ci-tools@main
         with:
           avocado-project: true
+          bot_app_id: ${{ secrets.MR_AVOCADO_ID }}
+          bot_app_installation_id: ${{ secrets.MR_AVOCADO_INSTALLATION_ID }}
+          bot_app_private_key: ${{ secrets.MR_AVOCADO_PRIVATE_KEY }}
