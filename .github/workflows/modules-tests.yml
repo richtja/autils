@@ -15,13 +15,16 @@ jobs:
         run: pip3 install 'avocado-framework<104.0'
 
       - name: Run the ar module test
-        run: ./tests/test-module.py metadata/autils/archive/ar.yml
+        run: ./tests/test_module.py metadata/autils/archive/ar.yml
 
   static-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+
+      - name: Install Avocado to allow for lint check on Python code under tests directory
+        run: pip3 install 'avocado-framework<104.0'
 
       - name: run static checks
         uses: avocado-framework/avocado-ci-tools@main
