@@ -39,6 +39,7 @@ def validate_yaml(filename, schema):
 
 
 def validate_yamls():
+    """Validates all yamls in the repo against the autils schema."""
     print("Starting validation...")
     failed = False
     for file in glob.glob("./metadata/autils/*/*.yml"):
@@ -53,6 +54,7 @@ def validate_yamls():
         return 1
 
     print("All files passed validation.")
+    return 0
 
 
 if __name__ == "__main__":

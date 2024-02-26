@@ -12,8 +12,8 @@ CONTAINER_IMAGE_MAPPING = {
     "Fedora 37": "fedora:37",
 }
 
-metadata_path = sys.argv[1]
-with open(metadata_path, "rb") as m:
+METADATA_PATH = sys.argv[1]
+with open(METADATA_PATH, "rb") as m:
     metadata = yaml.load(m, Loader=yaml.SafeLoader)
 
 test_suites = []
