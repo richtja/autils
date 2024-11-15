@@ -9,6 +9,7 @@ on:
         - mayor
         - minor
         default: 'mayor'
+  workflow_call:
 
 jobs:
 
