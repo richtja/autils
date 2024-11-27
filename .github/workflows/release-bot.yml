@@ -7,6 +7,8 @@ jobs:
   release-vote:
     name: release vote
     runs-on: ubuntu-20.04
+    outputs:
+      release: ${{ steps.vote_count.outputs.release }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -82,6 +84,7 @@ jobs:
           fi
       - name: Count votes
         if: ${{ env.TIME_FOR_VOTE == 1 }}
+        id: vote_count
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
@@ -125,6 +128,7 @@ jobs:
               }'
               echo "It is time for release."
               echo 'TIME_FOR_RELEASE=1' >> $GITHUB_ENV
+              echo "release=1" >> "$GITHUB_OUTPUT"
             else
               echo "We don't have enought votes."
             fi
@@ -151,9 +155,12 @@ jobs:
             }
             '
           fi
-      - name: Release
-        if: ${{ env.TIME_FOR_RELEASE == 1 }}
-        env:
-          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-        run: |
-          echo 'RELEASE'
+  pre-release:
+    needs: release-vote
+    secrets: inherit
+    if: ${{ needs.release-vote.outputs.release == 1 }}
+    uses: ./.github/workflows/pre-release.yml
+  release:
+    needs: pre-release
+    secrets: inherit
+    uses: ./.github/workflows/release.yml
