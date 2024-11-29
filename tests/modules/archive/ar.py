@@ -1,11 +1,6 @@
-try:
-    from autils.archive import ar
-except ImportError:
-    # FIXME: this should come instead from autils.  This is a
-    # workaround while the test framework does not know how
-    # to send the libraries themselves to the test environment
-    from avocado.utils import ar
 from avocado import Test
+
+from autils.archive import ar
 
 
 class Ar(Test):
