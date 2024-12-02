@@ -37,7 +37,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
           discussion_data=$(gh api graphql -f query='{
-                      search(first: 100, query: "repo:avocado-framework/autils is:open category:Release-decision", type: DISCUSSION) {
+                      search(first: 100, query: "repo:avocado-framework/aautils is:open category:Release-decision", type: DISCUSSION) {
                         nodes {
                           ... on Discussion {
                             id createdAt
