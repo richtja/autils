@@ -15,7 +15,7 @@ jobs:
         run: pip3 install 'avocado-framework<104.0'
 
       - name: Run the ar module test
-        run: ./tests/test_module.py metadata/autils/archive/ar.yml
+        run: ./tests/test_module.py metadata/archive/ar.yml
 
   static-checks:
     runs-on: ubuntu-latest
@@ -25,6 +25,9 @@ jobs:
 
       - name: Install Avocado to allow for lint check on Python code under tests directory
         run: pip3 install 'avocado-framework<104.0'
+
+      - name: Include autils directory from source tree into Python's PATH
+        run: pip3 install .
 
       - name: run static checks
         uses: avocado-framework/avocado-ci-tools@main
@@ -55,5 +58,5 @@ jobs:
 
       - name: Run API stability tests
         if: steps.test_changes.outcome == 'failure'
-        run: ./tests/test_module.py metadata/autils/archive/ar.yml
+        run: ./tests/test_module.py metadata/archive/ar.yml
 
