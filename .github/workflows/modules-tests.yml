@@ -27,7 +27,9 @@ jobs:
         run: pip3 install 'avocado-framework<104.0'
 
       - name: Include autils directory from source tree into Python's PATH
-        run: pip3 install .
+        run: |
+          pip install --upgrade pip
+          pip3 install .
 
       - name: run static checks
         uses: avocado-framework/avocado-ci-tools@main
