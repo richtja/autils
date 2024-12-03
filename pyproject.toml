@@ -35,3 +35,5 @@ Repository = "https://github.com/avocado-framework/aautils"
 packages = ["autils"]
 
 [tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"
