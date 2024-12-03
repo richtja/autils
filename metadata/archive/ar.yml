@@ -12,5 +12,5 @@ supported_platforms:
   - Fedora 36
   - Fedora 37
 tests:
-  - tests/autils/archive/ar.py
+  - tests/modules/archive/ar.py
 remote: false
