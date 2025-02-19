@@ -14,8 +14,8 @@ jobs:
       - name: Install Avocado to run tests
         run: pip3 install 'avocado-framework' coverage
 
-      - name: Run the ar module test
-        run: ./tests/test_module.py metadata/archive/ar.yml --coverage
+      - name: Run the all modules tests
+        run: ./tests/test_module.py metadata --coverage
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
@@ -65,5 +65,5 @@ jobs:
 
       - name: Run API stability tests
         if: steps.test_changes.outcome == 'failure'
-        run: ./tests/test_module.py metadata/archive/ar.yml
+        run: ./tests/test_module.py metadata
 
