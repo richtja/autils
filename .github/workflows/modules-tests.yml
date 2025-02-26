@@ -27,9 +27,13 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+          ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Install Avocado to allow for lint check on Python code under tests directory
-        run: pip3 install 'avocado-framework'
+      - name: Install requirements
+        run: pip3 install -r static-checks/requirements.txt
 
       - name: Include autils directory from source tree into Python's PATH
         run: |
@@ -37,9 +41,7 @@ jobs:
           pip3 install .
 
       - name: run static checks
-        uses: avocado-framework/avocado-ci-tools@main
-        with:
-          avocado-static-checks: true
+        run: ./static-checks/run-static-checks
 
 
   api-stability-tests:
