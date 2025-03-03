@@ -10,23 +10,66 @@ from avocado.utils import process
 from avocado.utils.podman import Podman
 
 CONTAINER_IMAGE_MAPPING = {
-    "CentOS Stream 9": ("redhat_based", "centos:stream9"),
-    "Fedora 36": ("redhat_based", "fedora:36"),
-    "Fedora 37": ("redhat_based", "fedora:37"),
+    "CentOS_Stream_9": ("redhat_based", "centos:stream9"),
+    "Fedora_36": ("redhat_based", "fedora:36"),
+    "Fedora_37": ("redhat_based", "fedora:37"),
 }
+
+
+def read_metadata(metadata_path):
+    """
+    Reads metadata yaml files from the directory.
+
+    It recursively reads metadata from given path and returns a dictionary with the
+    supported platforms and the tests that should be run on each platform.
+
+    :param metadata_path: Path to the directory containing metadata files.
+    :type metadata_path: str
+    :return: Dictionary with supported platforms and tests.
+    :rtype: dict
+
+    """
+
+    def read_yaml(file_path):
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                metadata = yaml.load(f, Loader=yaml.SafeLoader)
+        except FileNotFoundError:
+            print(f"File not found: {file_path}")
+        except yaml.YAMLError as e:
+            print(f"YAML parsing error in {file_path}: {e}")
+        for supported_platform in metadata["supported_platforms"]:
+            supported_platform = supported_platform.replace(" ", "_")
+            if supported_platform not in supported_platforms:
+                supported_platforms[supported_platform] = []
+            supported_platforms[supported_platform].extend(metadata["tests"])
+
+    supported_platforms = {}
+    if os.path.isdir(metadata_path):
+        for root, _, files in os.walk(metadata_path):
+            for file in files:
+                if file.endswith(".yml"):
+                    read_yaml(os.path.join(root, file))
+    else:
+        read_yaml(metadata_path)
+    return supported_platforms
+
 
 METADATA_PATH = sys.argv[1]
 COVERAGE = False
 if len(sys.argv) > 2:
     COVERAGE = sys.argv[2] == "--coverage"
-with open(METADATA_PATH, "rb") as m:
-    metadata = yaml.load(m, Loader=yaml.SafeLoader)
+
+platforms = read_metadata(METADATA_PATH)
 
 images = []
 test_suites = []
-for platform in metadata["supported_platforms"]:
-    name = platform.replace(" ", "_")
-    containerfile, image_version = CONTAINER_IMAGE_MAPPING.get(platform)
+
+for platform, tests in platforms.items():
+    try:
+        containerfile, image_version = CONTAINER_IMAGE_MAPPING.get(platform)
+    except TypeError:
+        print(f"platform {platform} is not in known container images")
     if COVERAGE:
         _, result, _ = Podman().execute(
             "build",
@@ -53,8 +96,8 @@ for platform in metadata["supported_platforms"]:
     images.append(image)
     config = {"run.spawner": "podman", "spawner.podman.image": image}
 
-    config["resolver.references"] = metadata["tests"]
-    test_suites.append(TestSuite.from_config(config, name))
+    config["resolver.references"] = tests
+    test_suites.append(TestSuite.from_config(config, platform))
 
 
 with Job(test_suites=test_suites) as j:
