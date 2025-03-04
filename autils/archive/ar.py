@@ -41,7 +41,10 @@ class ArMember:
 
 
 class Ar:
-    """An UNIX ar archive."""
+    """An UNIX ar archive iterator.
+
+    It reads ar archive file and iterates over the members in form of :class:`autils.archive.ar.ArMember`
+    """
 
     def __init__(self, path):
         self._path = path
