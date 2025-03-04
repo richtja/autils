@@ -17,10 +17,10 @@ Module to read UNIX ar files
 
 import struct
 
-#: The first eight bytes of all AR archives
+# The first eight bytes of all AR archives
 MAGIC = b"!<arch>\n"
 
-#: The header for each file in the archive
+# The header for each file in the archive
 FILE_HEADER_FMT = "16s12s6s6s8s10s2c"
 FILE_HEADER_SIZE = struct.calcsize(FILE_HEADER_FMT)
 
@@ -41,7 +41,10 @@ class ArMember:
 
 
 class Ar:
-    """An UNIX ar archive."""
+    """An UNIX ar archive iterator.
+
+    It reads ar archive file and iterates over the members in form of :class:`autils.archive.ar.ArMember`
+    """
 
     def __init__(self, path):
         self._path = path
