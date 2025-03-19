@@ -22,6 +22,15 @@
 
 .. toctree::
    :maxdepth: 2
+   :caption: Contributor's guide:
+   :hidden:
+
+   contributors/style
+   contributors/how
+   contributors/environment
+
+.. toctree::
+   :maxdepth: 2
    :caption: Maintainer's guide:
    :hidden:
 
