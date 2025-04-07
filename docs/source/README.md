@@ -4,13 +4,13 @@ Utility Libraries to power your tests (or general applications)
 
 AAutils, collection of well tested python utilities that will
 keep test writers efforts in the features to be tested, and away
-from debugging and troubleshooting the libraries themselves.
+from debugging and troubleshooting those libraries.
 
 The primary goal of AAutils is to be a place for modules
 that ease the interaction with system level features and interfaces. Which
 is commonly needed in test automation.
 
-The list of available utilities and supported platforms can be seen at
+This list of available utilities and supported platforms can be visible in
 https://avocado-framework.github.io/aautils.html.
 
 ## Installation
@@ -35,4 +35,4 @@ Then to install AAutils from the git repository run::
 
     $ git clone https://github.com/avocado-framework/aautils.git
     $ cd aautils
-    $ pip3 install . --user
+    $ pip install . --user
