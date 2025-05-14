@@ -1,0 +1,16 @@
+name: aurl
+description: URL related functions
+categories:
+  - Network
+  - Files
+maintainers:
+  - name: Jan Richter
+    email: jarichte@redhat.com
+    github_usr_name: richtja
+supported_platforms:
+  - CentOS Stream 9
+  - Fedora 36
+  - Fedora 37
+tests:
+  - tests/modules/aurl.py
+remote: false
