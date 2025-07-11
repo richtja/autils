@@ -36,3 +36,11 @@ Then to install AAutils from the git repository run::
     $ git clone https://github.com/avocado-framework/aautils.git
     $ cd aautils
     $ pip install . --user
+
+### AI-Generated code policy
+
+The AAutils project allows the use of AI-generated code, but it has to follow
+the guidelines and requirements outlined in the Policy for AI-Generated Code
+which can be found at:
+
+https://avocado-framework.readthedocs.io/en/latest/guides/contributor/chapters/ai_policy.html
