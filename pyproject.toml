@@ -32,7 +32,10 @@ Homepage = "https://avocado-framework.github.io/autils.html"
 Repository = "https://github.com/avocado-framework/aautils"
 
 [tool.setuptools]
-packages = ["autils"]
+packages = ["autils", "autils_external"]
+
+[tool.setuptools.package-dir]
+"autils_external" = "external"
 
 [tool.setuptools_scm]
 version_scheme = "guess-next-dev"
