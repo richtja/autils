@@ -16,8 +16,9 @@ Ports
 -----
 .. automodule:: autils.network.ports
 
+
 File
-====
+=======
 
 Path
 ----
@@ -29,3 +30,7 @@ Devel
 GDB
 ---
 .. automodule:: autils.devel.gdb
+
+Output
+------
+.. automodule:: autils.devel.output
