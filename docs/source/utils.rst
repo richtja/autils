@@ -22,3 +22,10 @@ File
 Path
 ----
 .. automodule:: autils.file.path
+
+Devel
+=====
+
+GDB
+---
+.. automodule:: autils.devel.gdb
