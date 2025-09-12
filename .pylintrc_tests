@@ -80,7 +80,8 @@ disable=line-too-long,
   invalid-name,
   protected-access,
   too-many-lines,
-  no-self-use
+  no-self-use,
+  no-member
 
 
 [REPORTS]
