@@ -1,5 +1,5 @@
-name: output
-description: Utility functions for user friendly display of information, including data size formatting and progress bars
+name: astring
+description: String operations and utilities for development and debugging (conversion, sanitation, console output processing)
 
 categories:
   - Development
@@ -13,5 +13,5 @@ supported_platforms:
   - Fedora 36
   - Fedora 37
 tests:
-  - tests/unit/modules/devel/output.py
+  - tests/unit/modules/devel/astring.py
 remote: false
