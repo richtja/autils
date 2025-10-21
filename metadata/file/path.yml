@@ -13,5 +13,5 @@ supported_platforms:
   - Fedora 36
   - Fedora 37
 tests:
-  - tests/modules/file/path.py
+  - tests/unit/modules/file/path.py
 remote: false

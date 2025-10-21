@@ -11,5 +11,5 @@ supported_platforms:
   - Fedora 36
   - Fedora 37
 tests:
-  - tests/modules/devel/gdb.py
+  - tests/unit/modules/devel/gdb.py
 remote: false

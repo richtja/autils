@@ -13,5 +13,5 @@ supported_platforms:
   - Fedora 36
   - Fedora 37
 tests:
-  - tests/modules/data_structures.py
+  - tests/unit/modules/data_structures.py
 remote: false
