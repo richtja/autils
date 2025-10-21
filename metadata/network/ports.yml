@@ -13,6 +13,6 @@ supported_platforms:
   - Fedora 36
   - Fedora 37
 tests:
-  - tests/modules/network/ports_unit.py
-  - tests/modules/network/ports_functional.py
+  - tests/unit/modules/network/ports.py
+  - tests/functional/modules/network/ports.py
 remote: false

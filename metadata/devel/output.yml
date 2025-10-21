@@ -13,5 +13,5 @@ supported_platforms:
   - Fedora 36
   - Fedora 37
 tests:
-  - tests/modules/devel/output.py
+  - tests/unit/modules/devel/output.py
 remote: false
