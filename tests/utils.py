@@ -20,6 +20,7 @@ class TestCaseTmpDir(unittest.TestCase):
 
     def setUp(self):
         prefix = temp_dir_prefix(self)
+        # pylint: disable=consider-using-with
         self.tmpdir = tempfile.TemporaryDirectory(prefix=prefix)
 
     def tearDown(self):
