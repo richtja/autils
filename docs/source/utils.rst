@@ -27,6 +27,10 @@ Path
 Devel
 =====
 
+astring
+-------
+.. automodule:: autils.devel.astring
+
 GDB
 ---
 .. automodule:: autils.devel.gdb
